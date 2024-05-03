@@ -1,0 +1,18 @@
+@use '../variables';
+
+.card {
+  background-color: variables.$white;
+  padding: 23px 16px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.card__title {
+  @include variables.headingM;
+}
+
+.card__subtasksNum {
+  @include variables.bodyM;
+  color: variables.$mediumGrey;
+}

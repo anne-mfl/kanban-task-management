@@ -1,0 +1,141 @@
+//color
+$black: #000112;
+$veryDarkGrey: #20212C;
+$darkGrey: #2B2C37;
+$darkLines: #3E3F4E;
+$mediumGrey: #828FA3;
+$lightLines: #E4EBFA;
+$lightGrey: #F4F7FD;
+$white: #FFFFFF;
+$mainPurple: #635FC7;
+$mainPurpleHover: #A8A4FF;
+$red: #EA5555;
+$redHover: #FF9898;
+
+//font
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&display=swap');
+
+//typography
+@mixin headingXl {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+@mixin headingL {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 23px;
+}
+
+@mixin headingM {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 19px;
+}
+
+@mixin headingS {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 2.4px;
+}
+
+@mixin bodyL {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 23px;
+}
+
+@mixin bodyM {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+// buttons
+@mixin primaryButtonL {
+  @include headingM;
+  color: $white;
+  background-color: $mainPurple;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 999px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $mainPurpleHover;
+  }
+}
+
+@mixin primaryButtonS {
+  font-size: 13px;
+  font-weight: 700;
+  color: $white;
+  background-color: $mainPurple;
+  border: none;
+  padding: 7px 24px;
+  border-radius: 999px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $mainPurpleHover;
+  }
+}
+
+@mixin secondaryButton {
+  font-size: 13px;
+  font-weight: 700;
+  color: $mainPurple;
+  background: rgba($mainPurple, 0.1);
+  border: none;
+  padding: 7px 24px;
+  border-radius: 999px;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba($mainPurple, 0.25);
+  }
+}
+
+@mixin destructiveButton {
+  font-size: 13px;
+  font-weight: 700;
+  color: $white;
+  background: $red;
+  border: none;
+  padding: 7px 24px;
+  border-radius: 999px;
+  cursor: pointer;
+
+  &:hover {
+    background: $redHover;
+  }
+}
+
+// input
+@mixin input {
+  width: calc(100% - 32px);
+  border: 1px solid rgb($black, 0.25);
+  border-radius: 4px;
+  padding: 8px 16px;
+
+  &::placeholder {
+    @include bodyL();
+    color: rgb($black, 0.25);
+  }
+}
+
+@mixin textarea {
+  width: calc(100% - 32px);
+  border: 1px solid rgb($black, 0.25);
+  border-radius: 4px;
+  padding: 8px 16px;
+  resize: none;
+  font-family: 'Plus Jakarta Sans';
+
+  &::placeholder {
+    @include bodyL();
+    color: rgb($black, 0.25);
+  }
+}

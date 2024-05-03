@@ -1,0 +1,15 @@
+@use '../variables';
+
+body {
+  margin: 0px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  display: flex;
+  overflow: hidden;
+  height: 100%;
+}
+
+.topbar_and_main {
+  background-color: variables.$lightGrey;
+  flex-grow: 1;
+  height: 100%;
+}

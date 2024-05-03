@@ -1,0 +1,50 @@
+@use '../variables';
+
+.column {
+  min-width: 320px;
+  margin-right: 24px;
+}
+
+.column__title {
+  @include variables.headingS;
+  color: variables.$mediumGrey;
+  margin-bottom: 24px;
+
+  .column__titleColorBall {
+    display: inline-block;
+    width: 16px;
+    background-color: pink;
+    border-radius: 100%;
+    margin-right: 12px;
+
+    &--0 {
+      background: #49C4E5;
+    }
+
+    &--1 {
+      background: #8471F2;
+    }
+
+    &--2 {
+      background: #67E2AE;
+    }
+
+    &--3 {
+      background: #e5a449;
+    }
+
+    &--4 {
+      background: #2a3fdb;
+    }
+
+    &--5 {
+      background: #c36e6e;
+    }
+  }
+}
+
+.column__emptyColumn{
+  border: 2px dashed variables.$lightLines;
+  border-radius: 8px;
+  height: calc(100% - 51px);
+}

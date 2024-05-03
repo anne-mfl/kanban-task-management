@@ -1,0 +1,38 @@
+@use 'styles/variables';
+
+.deleteTask {
+  width: 480px;
+
+  h1 {
+    @include variables.headingXl;
+    color: variables.$red;
+    margin: 0px 0px 24px;
+  }
+
+  p {
+    color: variables.$mediumGrey;
+    margin: 0px 0px 24px;
+
+    span {
+      font-weight: 700;
+    }
+  }
+}
+
+.deleteTask__buttonWrapper {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+}
+
+.deleteTask__deleteButton {
+  @include variables.destructiveButton;
+  padding: 12px 0px;
+  width: 50%;
+}
+
+.deleteTask__cancelButton {
+  @include variables.secondaryButton;
+  padding: 12px 0px;
+  width: 50%;
+}

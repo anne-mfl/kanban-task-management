@@ -1,0 +1,27 @@
+@use '../variables';
+
+.page {
+  overflow: auto;
+  height: calc(100vh - 98px);
+  width: calc(100vw - 250px);
+}
+
+.page__emptyBoard {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  height: calc(100vh - 98px);
+
+  p {
+    @include variables.headingL;
+    color: variables.$mediumGrey;
+    width: fit-content;
+  }
+
+  button {
+    @include variables.primaryButtonL;
+  }
+
+}

@@ -1,0 +1,22 @@
+@use '../variables';
+
+.board {
+  display: flex;
+  padding: 24px;
+}
+
+.board__addNewColumn {
+  background-color: #E9EFFA;
+  min-width: 320px;
+  margin-right: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  margin-top: 47px;
+
+  h1 {
+    @include variables.headingXl;
+    color: variables.$mediumGrey;
+  }
+}

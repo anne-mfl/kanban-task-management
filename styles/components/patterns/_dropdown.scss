@@ -1,0 +1,44 @@
+@use 'styles/variables';
+
+.dropdown {
+  width: 100%;
+  position: relative;
+}
+
+.dropdown__button {
+  @include variables.bodyL;
+  color: variables.$black;
+  width: 100%;
+  background-color: variables.$white;
+  border: 1px solid variables.$lightLines;
+  border-radius: 8px;
+  text-align: left;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dropdown__options {
+  @include variables.bodyL;
+  color: variables.$mediumGrey;
+  background-color: variables.$white;
+  border: 1px solid variables.$lightLines;
+  border-radius: 8px;
+  padding: 8px 16px;
+  list-style: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1;
+
+  li {
+    padding: 4px 0px;
+    cursor: pointer;
+
+    &:hover {
+      color: variables.$black;
+    }
+  }
+}

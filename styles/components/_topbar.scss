@@ -1,0 +1,22 @@
+@use '../variables';
+
+.topbar {
+  height: 97px;
+  padding: 0px 48px 0px 24px;
+  background-color: variables.$white;
+  border-bottom: 1px solid variables.$lightLines;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ 
+  h1 {
+    @include variables.headingXl;
+    margin: 0px;
+  }
+
+  button {
+    @include variables.primaryButtonL;
+    margin-right: 24px;
+  }
+
+}

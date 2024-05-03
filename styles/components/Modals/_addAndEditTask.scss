@@ -1,0 +1,58 @@
+@use 'styles/variables';
+
+.addAndEditTask {
+  width: 480px;
+
+  h1 {
+    @include variables.headingL;
+    margin: 0px 0px 24px;
+  }
+
+  h2 {
+    @include variables.bodyM;
+    color: variables.$mediumGrey;
+    margin: 0px 0px 8px;
+  }
+
+  section{
+    margin-bottom: 24px;
+  }
+
+  section:last-child{
+    margin-bottom: 0px;
+  }
+
+  input {
+    @include variables.input;
+  }
+
+  textarea {
+    @include variables.textarea;
+  }
+}
+
+.addAndEditTask__subtaskWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  input {
+    margin-right: 16px;
+  }
+
+  img {
+    cursor: pointer;
+  }
+}
+
+.addAndEditTask__subtasks__addNewSubTaskButton{
+  @include variables.secondaryButton;
+  width: 100%;
+  height: 40px;
+}
+
+.addAndEditTask__submitButton{
+  @include variables.primaryButtonL;
+  width: 100%;
+}

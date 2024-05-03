@@ -1,0 +1,65 @@
+@use 'styles/variables';
+
+.viewTask {
+  width: 523px;
+  
+  section {
+    margin-bottom: 24px;
+  }
+
+  section:last-child{
+    margin-bottom: 0px;
+  }
+
+  p {
+    @include variables.bodyL;
+    color: variables.$mediumGrey;
+    margin-bottom: 24px;
+  }
+
+  h2 {
+    @include variables.bodyM;
+    color: variables.$mediumGrey;
+    margin: 0px 0px 16px;
+  }
+}
+
+.viewTask__titleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  h1 {
+    @include variables.headingL;
+    margin: 0px;
+  }
+}
+
+.viewTask__subtasks {
+  list-style: none;
+  padding-left: 0px;
+  
+}
+
+.viewTask__subtasks__eachTask {
+  @include variables.bodyM;
+  background-color: variables.$lightGrey;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+
+  &--true{
+    color: variables.$mediumGrey;
+    text-decoration: line-through;
+  }
+
+  input {
+    accent-color: variables.$mainPurple;
+    margin-right: 16px;
+    height: 100%;
+  }
+
+}
