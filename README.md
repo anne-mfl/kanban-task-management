@@ -35,7 +35,7 @@ Users should be able to:
 
 ### Links
 
-- Live Site URL: [Add live site URL here](https://anne-mfl.github.io/kanban-task-management/)
+- [Live Site here](https://anne-mfl.github.io/kanban-task-management/)
 
 
 ## Built with
