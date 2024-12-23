@@ -1,14 +1,19 @@
 import React, { useMemo, useEffect } from 'react'
-import 'styles/components/Modals/_addAndEditBoard.scss'
-import { useDispatch } from 'react-redux'
+// import 'styles/components/Modals/_addAndEdit.scss'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form"
-import { addBoard } from '@/redux/slices/dataSlice'
+import { addBoard, editBoard } from '@/redux/slices/dataSlice'
 import { closeModal } from '@/redux/slices/modalSlice'
-import Image from 'next/image'
-import crossIcon from 'public/assets/icon-cross.svg'
+import CrossIcon from 'public/assets/icon-cross.svg'
+import type { BoardDetail, AllData, ColumnDetail } from 'type/type'
+import { RootState } from '@/redux/store'
 
 
 const AddAndEditBoard = ({ type }: { type: string }) => {
+
+  const allData: AllData = useSelector((state: RootState) => state.data)
+  const currentBoardIndex = allData.currentBoardIndex
+  const currentBoard = allData.boards[currentBoardIndex]
 
   const dispatch = useDispatch()
 
@@ -21,12 +26,12 @@ const AddAndEditBoard = ({ type }: { type: string }) => {
     control,
     getValues,
     formState: { errors }
-  } = useForm<any>({
+  } = useForm<BoardDetail>({
     defaultValues: useMemo(() => {
       return {
         name: '',
         columns: [
-          {name: '', tasks: []}
+          // { name: '', tasks: [] }
         ],
       }
     }, [])
@@ -37,23 +42,25 @@ const AddAndEditBoard = ({ type }: { type: string }) => {
     name: 'columns',
   });
 
-  // useEffect(() => {
-  //   if (type === 'edit') {
-  //     reset({
-  //       title: modalDetail.title,
-  //       subtasks: modalDetail.subtasks?.map((subtask: SubtaskDetail) => ({ title: subtask.title, isCompleted: subtask.isCompleted })),
-  //     })
-  //   }
-  // }, [modalDetail])
+  useEffect(() => {
+    if (type === 'edit') {
+      reset({
+        name: currentBoard.name,
+        columns: currentBoard.columns?.map((column: ColumnDetail) => ({ name: column.name, tasks: column.tasks })),
+      })
+    }
+  }, [currentBoard])
 
-  const onSubmit: SubmitHandler<any> = (newBoard) => {
+  const onSubmit: SubmitHandler<BoardDetail> = (newBoard) => {
     type === 'add' && dispatch(addBoard({ newBoard }))
-    // type === 'edit' && dispatch(editTask({newBoard, oldTask: modalDetail, currentBoard}))
+    type === 'edit' && dispatch(editBoard({ newBoard, currentBoard }))
     dispatch(closeModal())
   }
 
+  // console.log(errors)
+
   return (
-    <div className='addAndEditTask'>
+    <div className='addAndEdit'>
       <h1>
         {type === 'add' && 'Add New Board'}
         {type === 'edit' && 'Edit Board'}
@@ -62,37 +69,44 @@ const AddAndEditBoard = ({ type }: { type: string }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <section>
           <h2>Name</h2>
-          <input type='text' placeholder='e.g. Web Design' {...register('name')} />
-        </section>
-      
-        <section>
-          <h2>Columns</h2>
-          {fields.map((column: any, index: number) => {
-            return <div className='addAndEditTask__subtaskWrapper' key={index}>
-              <input
-                type='text'
-                // defaultValue={subtask.title}
-                placeholder='e.g. Make coffee'
-                {...register(`columns.${index}.name`)}
-              />
-              <Image
-                src={crossIcon}
-                alt='close icon'
-                onClick={() => remove(index)}
-              />
-            </div>
-          })}
-          <button
-            onClick={() => append({name: '', tasks: []})}
-            className='addAndEditTask__subtasks__addNewSubTaskButton'
-            type='button'
-          >
-            + Add New Column
-          </button>
+          <input
+            type='text'
+            placeholder='e.g. Web Design'
+            className={errors.name && 'addAndEdit__input__error'}
+            {...register('name', { required: true })}
+          />
+          {errors.name && <span className='addAndEdit__input__errorMessage addAndEdit__input__errorMessage--titleAndName'>cannot be empty</span>}
         </section>
 
         <section>
-          <button className='addAndEditTask__submitButton' type='submit'>
+          <h2>Columns</h2>
+          {fields.map((column, index) => {
+            // console.log(column)
+            return <div className='addAndEdit__subtaskWrapper' key={index}>
+              <input
+                type='text'
+                defaultValue={column.name}
+                placeholder='e.g. Make coffee'
+                className={errors.columns?.[index] && 'addAndEdit__input__error'}
+                {...register(`columns.${index}.name`, { required: true })}
+              />
+              {errors.columns?.[index] && <span className='addAndEdit__input__errorMessage addAndEdit__input__errorMessage--subtaskAndColumn'>cannot be empty</span>}
+              <CrossIcon onClick={() => remove(index)} />
+            </div>
+          })}
+          {fields.length < 7 &&
+            <button
+              onClick={() => append({ name: '', tasks: [] })}
+              className='addAndEdit__subtasks__addNewSubTaskButton'
+              type='button'
+            >
+              + Add New Column
+            </button>
+          }
+        </section>
+
+        <section>
+          <button className='addAndEdit__submitButton' type='submit'>
             {type === 'add' && 'Create New Board'}
             {type === 'edit' && 'Save Changes'}
           </button>

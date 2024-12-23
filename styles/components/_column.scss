@@ -1,19 +1,19 @@
-@use '../variables';
+@use 'styles/variables';
 
 .column {
-  min-width: 320px;
+  min-width: 280px;
   margin-right: 24px;
 }
 
 .column__title {
   @include variables.headingS;
-  color: variables.$mediumGrey;
-  margin-bottom: 24px;
+  color: var(--secondary-text-color);
+  margin: 0px 0px 24px 0px;
 
   .column__titleColorBall {
     display: inline-block;
     width: 16px;
-    background-color: pink;
+    // background-color: #FF85B3;
     border-radius: 100%;
     margin-right: 12px;
 
@@ -30,21 +30,31 @@
     }
 
     &--3 {
-      background: #e5a449;
+      background: #FFD966;
     }
 
     &--4 {
-      background: #2a3fdb;
+      background: #F25A67;
     }
 
     &--5 {
-      background: #c36e6e;
+      background: #3C9EE7;
     }
+
+    &--6 {
+      background: #FF85B3;
+    }
+
   }
 }
 
-.column__emptyColumn{
-  border: 2px dashed variables.$lightLines;
+.column__emptyColumn {
+  border: 2px dashed var(--border-line-color);
   border-radius: 8px;
-  height: calc(100% - 51px);
+  height: calc(100vh - 200px);
+}
+
+.column__tasksList {
+  list-style-type: none;
+  padding: 0;
 }

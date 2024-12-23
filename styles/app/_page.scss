@@ -1,9 +1,10 @@
-@use '../variables';
+@use 'styles/variables';
 
 .page {
   overflow: auto;
   height: calc(100vh - 98px);
-  width: calc(100vw - 250px);
+  flex-grow: 1; 
+  padding: 24px;
 }
 
 .page__emptyBoard {
@@ -16,7 +17,7 @@
 
   p {
     @include variables.headingL;
-    color: variables.$mediumGrey;
+    color: var(--secondary-text-color);
     width: fit-content;
   }
 

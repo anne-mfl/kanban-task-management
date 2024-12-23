@@ -1,22 +1,86 @@
-@use '../variables';
+@use 'styles/variables';
 
 .topbar {
-  height: 97px;
-  padding: 0px 48px 0px 24px;
-  background-color: variables.$white;
-  border-bottom: 1px solid variables.$lightLines;
+  height: 89px;
+  padding: 0px 32px 0px 24px;
+  transition-duration: 0.35s;
+  background-color: var(--secondary-bg-color);
+  border-bottom: 1px solid var(--border-line-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
- 
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
   h1 {
     @include variables.headingXl;
     margin: 0px;
+    color: var(--main-text-color);
+    white-space: nowrap;
+
+    .topbar__mobile__logo,
+    .topbar__mobile__chevronIcon {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      display: flex;
+      align-items: center;
+
+      .topbar__mobile__logo {
+        display: block;
+        margin-right: 12px;
+      }
+
+      .topbar__mobile__chevronIcon {
+        display: block;
+        padding: 16px 10px;
+        cursor: pointer;
+
+        &__menuOpen--true {
+          transform: rotate(180deg);
+        }
+      }
+    }
   }
 
-  button {
-    @include variables.primaryButtonL;
-    margin-right: 24px;
+  @media (max-width: 1023px) {
+    height: 75px;
+    padding-right: 24px;
   }
 
+  @media (max-width: 767px) {
+    height: 59px;
+    padding: 0px 16px;
+  }
+}
+
+
+
+.topbar__addTaskButton {
+  @include variables.primaryButtonL;
+  margin-right: 24px;
+
+  &::before {
+    content: '+ Add New Task';
+    display: block;
+  }
+
+  @media (max-width: 767px) {
+    padding: 6px 16px;
+    margin-right: 12px;
+
+    &::before {
+      content: '+';
+      font-size: 20px;
+    }
+  }
+}
+
+.topbar__addTaskButton:disabled {
+  background-color: variables.$mainPurpleHover;
+  cursor: not-allowed;
 }

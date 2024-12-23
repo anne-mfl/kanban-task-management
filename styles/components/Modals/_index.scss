@@ -12,9 +12,34 @@
   justify-content: center;
   align-items: center;
 
-  main {
-    background-color: variables.$white;
+  &__content {
+    width: calc(480px - 32px * 2);
+    background-color: var(--secondary-bg-color);
+    color: var(--main-text-color);
     border-radius: 8px;
     padding: 32px;
+
+    @media (max-width: 767px) {
+      width: calc(340px - 24px * 2);
+      padding: 24px;
+    }
+  }
+}
+
+
+.modal__mobileMenu {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  width: 100vw;
+  z-index: 100;
+  position: fixed;
+  top: 65px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+
+  main {
+    margin-top: 20px;
   }
 }

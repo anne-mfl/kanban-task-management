@@ -1,0 +1,40 @@
+@use 'styles/variables';
+
+:root {
+  --main-bg-color: #{variables.$lightGrey};
+  --secondary-bg-color: #{variables.$white};
+
+  --main-text-color: #{variables.$black};
+  --secondary-text-color: #{variables.$mediumGrey};
+
+  --border-line-color: #{variables.$lightLines};
+  --newcolumn-bg-color: #E9EFFA;
+
+  --secondary-btn-bg-color: #{rgba(variables.$mainPurple, 0.1)};
+  --secondary-btn-bg-hover-color: #{rgba(variables.$mainPurple, 0.25)};
+
+  --subtask-checkbox-bg-color: #{variables.$lightGrey};
+  --subtask-checkbox-bg-hover-color: #{rgba(variables.$mainPurple, 0.25)};
+
+  --input-placeholder-color: #{rgba(variables.$black, 0.25)};
+}
+
+
+[data-theme="dark"] {
+  --main-bg-color: #{variables.$veryDarkGrey};
+  --secondary-bg-color: #{variables.$darkGrey};
+
+  --main-text-color: #{variables.$white};
+  --secondary-text-color: #{variables.$mediumGrey};
+
+  --border-line-color: #{variables.$darkLines};
+  --newcolumn-bg-color: #2B2C37;
+
+  --secondary-btn-bg-color: #{variables.$white};
+  --secondary-btn-bg-hover-color: #{variables.$white};
+
+  --subtask-checkbox-bg-color: #{variables.$veryDarkGrey};
+  --subtask-checkbox-bg-hover-color: #{rgba(variables.$mainPurple, 0.25)};
+
+  --input-placeholder-color: #{rgba(variables.$white, 0.25)};
+}

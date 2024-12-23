@@ -1,35 +1,40 @@
 'use client'
+
 import Image from "next/image";
 import "../styles/app/_page.scss";
-
 import { RootState } from '@/redux/store'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Board from "@/components/Board";
 import type { AllData } from "@/type/type";
-
+import { useEffect } from "react";
+import { openModal } from "@/redux/slices/modalSlice";
 
 export default function Home() {
 
   const allData: AllData = useSelector((state: RootState) => state.data)
-  // console.log('=====>', allData)
-  // const currentBoard = useSelector((state: RootState) => state.currentBoard)
-  // console.log({currentBoard})
+  const currentBoard = allData.boards[allData.currentBoardIndex]
 
-  const currentBoard = allData.currentBoard ? allData.currentBoard : allData.boards[0]
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    localStorage.setItem('data', JSON.stringify(allData))
+  }, [allData])
 
   return (
-    <main className='page'>
+    <main className='page' data-cy='page'>
       {
         currentBoard.columns && currentBoard.columns.length === 0
           ?
           <section className='page__emptyBoard'>
             <div>
-              <p>This board is empty. Create a new columns to get started.</p>
-              <button>+ Add New Column</button>
+              <p>This board is empty. Create new columns to get started.</p>
+              <button onClick={() => dispatch(openModal({ modalType: 'EditBoard', modalDetail: currentBoard }))}>
+                + Add New Column
+              </button>
             </div>
           </section>
           :
-          <Board/>
+          <Board />
       }
     </main>
   );

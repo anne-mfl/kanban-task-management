@@ -1,74 +1,160 @@
-@use '../variables';
+@use 'styles/variables';
 
 .sidebar {
-  width: 250px;
   height: 100vh;
-  background-color: variables.$white;
-  border-right: 1px solid variables.$lightLines;
-  padding: 32px 24px;
+  background-color: var(--secondary-bg-color);
+  border-right: 1px solid var(--border-line-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
+  transition: background-color 0.35s, border-right 0.35s, width 0.3s ease;
+
+  &--true {
+    width: 300px;
+    padding: 32px 24px;
+
+    section {
+      width: 252px;
+    }
+  }
+
+  &--false {
+    width: 0px;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+
+    section {
+      display: none;
+    }
+  }
 
   h1 {
     @include variables.headingS;
-    color: variables.$mediumGrey;
+    color: var(--secondary-text-color);
     margin: 54px 0px 20px;
   }
 
   ul {
     padding: 0px;
+    list-style-type: none;
+  }
 
-    li {
-      @include variables.headingM;
-      list-style-type: none;
-      color: variables.$mediumGrey;
-      line-height: 48px;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
+  @media (max-width: 1023px) {
+    &--true {
+      width: 250px; 
+      padding: 24px 16px;
 
-      img {
-        margin-right: 16px;
+      section {
+        width: 218px;
       }
     }
+  }
 
-    button {
-      @include variables.headingM;
+  @media (max-width: 767px) {
+    height: fit-content;
+    border-radius: 8px;
+    border: 1px solid var(--border-line-color);
+    margin: 0px auto;
+
+    h1 {
+      margin: 0px 0px 16px;
+    }
+
+    .sidebar__logo {
+      display: none;
+    }
+  }
+}
+
+
+
+// ----------------- style for board list -----------------
+
+.sidebar__currentBoard {
+
+  &--true {
+    line-height: 48px;
+    color: variables.$white !important;
+    background-color: variables.$mainPurple;
+    margin-left: -32px;
+    padding-left: 32px;
+    border-top-right-radius: 99px;
+    border-bottom-right-radius: 99px;
+
+    svg {
+      margin-right: 16px;
+      color: white;
+    }
+  }
+
+  &--false {
+    @include variables.headingM;
+    list-style-type: none;
+    color: var(--secondary-text-color);
+    line-height: 48px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    svg {
+      margin-right: 16px;
+    }
+
+    &:hover {
       color: variables.$mainPurple;
-      background-color: transparent;
-      border: none;
-      line-height: 48px;
-      font-size: 16px;
-      padding: 0px;
-      cursor: pointer;
+      background-color: variables.$lightGrey;
+      border-top-right-radius: 99px;
+      border-bottom-right-radius: 99px;
+      margin-left: -32px;
+      padding-left: 32px;
+    }
+  }
+
+  &--createNewBoard {
+    @include variables.headingM;
+    color: variables.$mainPurple;
+    list-style-type: none;
+    line-height: 48px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    svg {
+      margin-right: 16px;
+    }
+  }
+
+
+  @media (max-width: 1023px) {
+    &--true {
+      margin-left: -16px;
+      padding-left: 16px;
+    }
+    &--false {
+      &:hover {
+        margin-left: -16px;
+        padding-left: 16px;
+      }
     }
   }
 
 }
 
-.sidebar__currentBoard {
-  color: variables.$white !important;
-  background-color: variables.$mainPurple;
-  margin-left: -32px;
-  padding-left: 32px;
-  border-top-right-radius: 99px;
-  border-bottom-right-radius: 99px;
 
-  img {
-    filter: brightness(200%);
-  }
-}
+// ----------------- toggle for theme -----------------
+
 
 .sidebar__themeToggle {
-  background-color: variables.$lightGrey;
+  background-color: var(--main-bg-color);
   height: 48px;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 72px;
+  transition: background-color 0.35s;
 
   label {
     position: relative;
@@ -91,22 +177,26 @@
       right: 0;
       bottom: 0;
       background-color: variables.$mainPurple;
-      -webkit-transition: .4s;
-      transition: .4s;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
       border-radius: 34px;
-    }
 
-    span:before {
-      position: absolute;
-      content: "";
-      height: 14px;
-      width: 14px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-      border-radius: 50%;
+      &:hover {
+        background-color: variables.$mainPurpleHover;
+      }
+
+      &:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 2px;
+        bottom: 2px;
+        background-color: variables.$white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
     }
 
     input:checked+span:before {
@@ -115,20 +205,71 @@
       transform: translateX(19px);
     }
   }
+
+  @media (max-width: 767px) {
+    margin-bottom: 0px;
+  }
 }
 
+// ----------------- hide sidebar button -----------------
 
 .sidebar__hideSidebar {
-  button {
-    @include variables.headingM;
-    padding: 0px;
+  @include variables.headingM;
+  border: none;
+  cursor: pointer;
+  padding: 15px 0px;
+  border-top-right-radius: 99px;
+  border-bottom-right-radius: 99px;
+  background: variables.$mainPurple;
+  display: block;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 32px;
+  transition: width 0.3s ease;
+
+  &--true {
     background-color: transparent;
-    border: none;
-    color: variables.$mediumGrey;
+    color: var(--secondary-text-color);
     display: flex;
-    
-    img {
+    white-space: nowrap;
+    width: calc(252px + 32px);
+
+    svg {
       margin-right: 16px;
     }
+
+    &:hover {
+      color: variables.$mainPurple;
+      background-color: variables.$lightGrey;
+      margin-left: -32px;
+      padding-left: 32px;
+
+      svg {
+        color: variables.$mainPurple;
+      }
+    }
   }
+
+  &--false {
+    width: 56px;
+
+    &:hover {
+      background-color: variables.$mainPurpleHover;
+    }
+  }
+
+  div {
+    width: fit-content
+  }
+
+  @media (max-width: 1023px) {
+    &--true {
+      width: calc(218px + 32px);
+    }
+  }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+
 }

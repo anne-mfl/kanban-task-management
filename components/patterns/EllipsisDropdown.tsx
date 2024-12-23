@@ -1,37 +1,41 @@
 'use client'
+
 import React, { useState } from 'react'
 import Image from 'next/image';
-import verticalElipsisIcon from 'public/assets/icon-vertical-ellipsis.svg'
+import VerticalElipsisIcon from 'public/assets/icon-vertical-ellipsis.svg'
 import 'styles/components/patterns/_ellipsisdropdown.scss'
 import { useDispatch } from 'react-redux';
 import { openModal } from '@/redux/slices/modalSlice';
+import type { BoardDetail, TaskDetail } from 'type/type'
 
-const EllipsisDropdown = ({ taskDetail }: { taskDetail: any }) => {
+const EllipsisDropdown = ({ detail, boardOrTask }: { detail: BoardDetail | TaskDetail, boardOrTask: string }) => {
 
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
 
   const dispatch = useDispatch()
 
   return (
-    <div className='ellipsisDropdown'>
-      <Image
-        src={verticalElipsisIcon}
-        alt='vertical elipsis icon'
-        onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
-      />
+    <div className='ellipsisDropdown' data-cy='ellipsisDropdown'>
+      <VerticalElipsisIcon onClick={() => setDropdownIsOpen(!dropdownIsOpen)} />
       {dropdownIsOpen && (
-        <section className='ellipsisDropdown__menu'>
+        <section className={`ellipsisDropdown__menu ellipsisDropdown__menu--${boardOrTask}`}>
           <button
             className='ellipsisDropdown__button'
-            onClick={() => dispatch(openModal({ modalType: 'EditTask', modalDetail: taskDetail }))}
+            onClick={() => {
+              dispatch(openModal({ modalType: `Edit${boardOrTask}`, modalDetail: detail }))
+              setDropdownIsOpen(false)
+            }}
           >
-            Edit Task
+            Edit {boardOrTask}
           </button>
-          <button 
-          className='ellipsisDropdown__button ellipsisDropdown__button--warning'
-            onClick={()=> dispatch(openModal({modalType: 'DeleteTask', modalDetail: taskDetail}))}
+          <button
+            className='ellipsisDropdown__button ellipsisDropdown__button--warning'
+            onClick={() => {
+              dispatch(openModal({ modalType: `Delete${boardOrTask}`, modalDetail: detail }))
+              setDropdownIsOpen(false)
+            }}
           >
-            Delete Task
+            Delete {boardOrTask}
           </button>
         </section>
       )}

@@ -1,18 +1,24 @@
-@use '../variables';
+@use 'styles/variables';
 
 .card {
-  background-color: variables.$white;
+  background-color: var(--secondary-bg-color);
+  width: calc(280px - 16px * 2);
   padding: 23px 16px;
   margin-bottom: 20px;
   border-radius: 8px;
   cursor: pointer;
+  transition: 0.35s
 }
 
 .card__title {
   @include variables.headingM;
+  color: var(--main-text-color);
+  transition: 0.35s;
+  margin: 0 0 8px 0;
 }
 
 .card__subtasksNum {
   @include variables.bodyM;
-  color: variables.$mediumGrey;
+  color: var(--secondary-text-color);
+  margin: 0px;
 }

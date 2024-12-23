@@ -1,38 +1,38 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import 'styles/components/_sidebar.scss'
-import Image from 'next/image'
-import logoDark from 'public/assets/logo-dark.svg'
-import boardIcon from 'public/assets/icon-board.svg'
-import lightIcon from 'public/assets/icon-light-theme.svg'
-import darkIcon from 'public/assets/icon-dark-theme.svg'
-import hideIcon from 'public/assets/icon-hide-sidebar.svg'
+import LogoDark from 'public/assets/logo-dark.svg'
+import LogoLight from 'public/assets/logo-light.svg'
+import BoardIcon from 'public/assets/icon-board.svg'
+import LightIcon from 'public/assets/icon-light-theme.svg'
+import DarkIcon from 'public/assets/icon-dark-theme.svg'
+import HideIcon from 'public/assets/icon-hide-sidebar.svg'
+import ShowIcon from 'public/assets/icon-show-sidebar.svg'
 import { RootState } from '@/redux/store'
 import { useSelector, useDispatch } from "react-redux";
-// import { changeCurrentBoard } from '@/redux/slices/currentBoardSlice'
-import { changeCurrentBoard } from '@/redux/slices/dataSlice'
+import { changeCurrentBoardIndex } from '@/redux/slices/dataSlice'
 import { openModal } from '@/redux/slices/modalSlice'
-import type { AllData } from '@/type/type'
+import type { AllData } from 'type/type'
+import { toggleTheme } from '@/redux/slices/themeSlice'
 
 const Sidebar = () => {
 
+  const [sidebarIsDisplayed, setSidebarIsDisplayed] = useState(true)
+
   const allData: AllData = useSelector((state: RootState) => state.data)
-  // console.log('allData=====>', allData)
-  // const currentBoard = useSelector((state: RootState) => state.currentBoard)
-  // console.log('currentBoard======>', currentBoard)
-
-  // const currentBoard = useSelector((state: RootState) => state.data.boards[0])
-  
-  const currentBoard = allData.currentBoard ? allData.currentBoard : allData.boards[0]
-  
-
+  const currentBoard = allData.boards[allData.currentBoardIndex]
+  const currentTheme = useSelector((state: RootState) => state.theme)
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+  }, [currentTheme]);
+
   return (
-    <div className='sidebar'>
+    <div className={`sidebar sidebar--${sidebarIsDisplayed}`} data-cy='sidebar'>
       <section>
-        <Image src={logoDark} alt='kanban logo' />
+        {currentTheme === 'light' ? <LogoDark className='sidebar__logo' /> : <LogoLight className='sidebar__logo' />}
 
         <h1>ALL BOARDS({allData.boards.length})</h1>
 
@@ -40,45 +40,56 @@ const Sidebar = () => {
           {allData.boards.map((board, i) => {
             return (
               <li
-                className={currentBoard.name === board.name ? 'sidebar__currentBoard' : ''}
-                // onClick={() => dispatch(changeCurrentBoard(board.name))}
-                onClick={() => dispatch(changeCurrentBoard(i))}
+                className={`sidebar__currentBoard--${currentBoard.name === board.name}`}
+                onClick={() => dispatch(changeCurrentBoardIndex(i))}
                 key={board.name}
               >
-                <Image src={boardIcon} alt='board icon' />
+                <BoardIcon />
                 {board.name}
               </li>
             )
           })}
-          <li>
-            <Image src={boardIcon} alt='board icon' />
-            <button onClick={() => dispatch(openModal({ modalType: 'AddNewBoard', modalDetail: {} }))}>
-              + Create New Board
-            </button>
+          <li
+            onClick={(e) => {
+              e.stopPropagation()
+              dispatch(openModal({ modalType: 'AddNewBoard', modalDetail: {} }))
+            }}
+            className='sidebar__currentBoard--createNewBoard'
+          >
+            <BoardIcon />
+            + Create New Board
           </li>
         </ul>
       </section>
 
 
-      <section>
-        <div className='sidebar__themeToggle'>
-          <Image src={lightIcon} alt='light icon' />
-          <label className='switch'>
-            <input type='checkbox' />
-            <span className='slider round' />
-          </label>
-          <Image src={darkIcon} alt='dark icon' />
-        </div>
+      <div>
 
-        <div className='sidebar__hideSidebar'>
-          <button>
-            <Image src={hideIcon} alt='hide sidebar icon' />
-            Hide Sidebar
+        <section className='sidebar__themeToggle'>
+          <LightIcon />
+          <label className='switch' onClick={(e) => e.stopPropagation()}>
+            <input type='checkbox' onClick={() => dispatch(toggleTheme())} />
+            <span data-cy='themeToggle' />
+          </label>
+          <DarkIcon />
+        </section>
+
+        <div>
+          <button
+            data-cy='hideSidebar'
+            className={`sidebar__hideSidebar sidebar__hideSidebar--${sidebarIsDisplayed}`}
+            onClick={() => setSidebarIsDisplayed(!sidebarIsDisplayed)}
+          >
+            {sidebarIsDisplayed
+              ? <div>
+                <HideIcon />
+                Hide Sidebar
+              </div>
+              : <ShowIcon />
+            }
           </button>
         </div>
-      </section>
-
-
+      </div>
 
     </div>
 

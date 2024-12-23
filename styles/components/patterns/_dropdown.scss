@@ -7,10 +7,10 @@
 
 .dropdown__button {
   @include variables.bodyL;
-  color: variables.$black;
+  color: var(--main-text-color);
   width: 100%;
-  background-color: variables.$white;
-  border: 1px solid variables.$lightLines;
+  background-color: var(--secondary-bg-color);
+  border: 1.5px solid var(--border-line-color);
   border-radius: 8px;
   text-align: left;
   padding: 8px 16px;
@@ -20,11 +20,20 @@
   cursor: pointer;
 }
 
+.dropdown__button__open {
+  &--true {
+    border: 1.5px solid variables.$mainPurple;
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+}
+
 .dropdown__options {
   @include variables.bodyL;
-  color: variables.$mediumGrey;
-  background-color: variables.$white;
-  border: 1px solid variables.$lightLines;
+  color: var(--secondary-text-color);
+  background-color: var(--secondary-bg-color);
+  border: 1.5px solid var(--border-line-color);
   border-radius: 8px;
   padding: 8px 16px;
   list-style: none;
@@ -38,7 +47,7 @@
     cursor: pointer;
 
     &:hover {
-      color: variables.$black;
+      color: var(--main-text-color);
     }
   }
 }

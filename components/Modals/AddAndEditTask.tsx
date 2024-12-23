@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
-import 'styles/components/Modals/_addAndEditTask.scss'
+import 'styles/components/Modals/_addAndEdit.scss'
 import Image from 'next/image'
-import crossIcon from 'public/assets/icon-cross.svg'
+import CrossIcon from 'public/assets/icon-cross.svg'
 import Dropdown from 'components/patterns/Dropdown'
 import type { TaskDetail, SubtaskDetail, AllData } from 'type/type'
 import { useDispatch, useSelector } from "react-redux";
@@ -10,19 +10,14 @@ import { useForm, SubmitHandler, useFieldArray } from "react-hook-form"
 import { current } from '@reduxjs/toolkit'
 import { addTask, editTask } from '@/redux/slices/dataSlice'
 import { closeModal } from '@/redux/slices/modalSlice'
-import 'styles/components/Modals/_addAndEditTask.scss'
+
 
 const AddAndEditTask = ({ type }: { type: string }) => {
 
   const modalDetail: TaskDetail = useSelector((state: RootState) => state.modal.modalDetail)
-  // console.log('modalDetail.status=====>',modalDetail.status)
-  // const currentBoard = useSelector((state: RootState) => state.currentBoard)
-  // console.log('currentBoard.columns.name==>',currentBoard.columns[0].name)
-
-  const allData: AllData = useSelector((state: RootState)=> state.data)
-  const currentBoard = allData.currentBoard ? allData.currentBoard : allData.boards[0]
-  // console.log('currentboard=====>', currentBoard)
-
+  const allData: AllData = useSelector((state: RootState) => state.data)
+  const currentBoardIndex = allData.currentBoardIndex
+  const currentBoard = allData.boards[currentBoardIndex]
 
   const dispatch = useDispatch()
 
@@ -40,7 +35,9 @@ const AddAndEditTask = ({ type }: { type: string }) => {
       return {
         title: '',
         description: '',
-        subtasks: [{ title: '', isCompleted: false }],
+        subtasks: [
+          // { title: '', isCompleted: false }
+        ],
         status: currentBoard.columns[0].name
       }
     }, [modalDetail])
@@ -64,23 +61,20 @@ const AddAndEditTask = ({ type }: { type: string }) => {
 
   const status = getValues().status
 
-  const onSubmit: SubmitHandler<any> = (newTask) => {
-    type === 'add' && dispatch(addTask({ newTask, currentBoard }))
-    type === 'edit' && dispatch(editTask({newTask, oldTask: modalDetail, currentBoard}))
+  const onSubmit: SubmitHandler<TaskDetail> = (newTask) => {
+    type === 'add' && dispatch(addTask({ newTask, currentBoard, currentBoardIndex }))
+    type === 'edit' && dispatch(editTask({ newTask, oldTask: modalDetail, currentBoard, currentBoardIndex }))
     dispatch(closeModal())
   }
-
-
 
   const onSetCurrentStatus = (value: string) => {
     setValue('status', value)
   }
 
   watch() //これがないとviewtask, addtaskのstatusの切り替えがうまくいかない
-  // console.log(watch('status'))
 
   return (
-    <div className='addAndEditTask'>
+    <div className='addAndEdit'>
       <h1>
         {type === 'add' && 'Add New Task'}
         {type === 'edit' && 'Edit Task'}
@@ -88,9 +82,14 @@ const AddAndEditTask = ({ type }: { type: string }) => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <section>
-
           <h2>Title</h2>
-          <input type='text' placeholder='e.g. Take coffee break' {...register('title')} />
+          <input
+            type='text'
+            placeholder='e.g. Take coffee break'
+            className={errors.title && 'addAndEdit__input__error'}
+            {...register('title', { required: true })}
+          />
+          {errors.title && <span className='addAndEdit__input__errorMessage addAndEdit__input__errorMessage--titleAndName'>cannot be empty</span>}
         </section>
 
         <section>
@@ -104,24 +103,22 @@ const AddAndEditTask = ({ type }: { type: string }) => {
 
         <section>
           <h2>Subtasks</h2>
-          {fields.map((subtask: SubtaskDetail, index: number) => {
-            return <div className='addAndEditTask__subtaskWrapper' key={index}>
+          {fields.map((subtask, index) => {
+            return <div className='addAndEdit__subtaskWrapper' key={index}>
               <input
                 type='text'
                 defaultValue={subtask.title}
                 placeholder='e.g. Make coffee'
-                {...register(`subtasks.${index}.title`)}
+                className={errors.subtasks?.[index] && 'addAndEdit__input__error'}
+                {...register(`subtasks.${index}.title`, { required: true })}
               />
-              <Image
-                src={crossIcon}
-                alt='close icon'
-                onClick={() => remove(index)}
-              />
+              {errors.subtasks?.[index] && <span className='addAndEdit__input__errorMessage addAndEdit__input__errorMessage--subtaskAndColumn'>cannot be empty</span>}
+              <CrossIcon onClick={() => remove(index)} />
             </div>
           })}
           <button
             onClick={() => append({ title: '', isCompleted: false })}
-            className='addAndEditTask__subtasks__addNewSubTaskButton'
+            className='addAndEdit__subtasks__addNewSubTaskButton'
             type='button'
           >
             + Add New Subtask
@@ -138,7 +135,7 @@ const AddAndEditTask = ({ type }: { type: string }) => {
         </section>
 
         <section>
-          <button className='addAndEditTask__submitButton' type='submit'>
+          <button className='addAndEdit__submitButton' type='submit'>
             {type === 'add' && 'Create Task'}
             {type === 'edit' && 'Save Changes'}
           </button>

@@ -1,20 +1,19 @@
-import type { Metadata } from "next";
-import "../styles/app/_layout.scss";
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/Topbar";
-import Providers from "@/redux/Provider";
-import Modals from "components/Modals";
-
+import type { Metadata } from "next"
+import "styles/app/_layout.scss"
+import Sidebar from "components/Sidebar"
+import Topbar from "components/Topbar"
+import Providers from "@/redux/Provider"
+import Modals from "components/Modals"
 
 export const metadata: Metadata = {
   title: "Kanban",
   description: "Kanban task management web application",
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -25,15 +24,17 @@ export default function RootLayout({
 
       <body>
         <Providers>
-          <Sidebar />
-          <div className="topbar_and_main">
-            <Topbar />
-            {children}
+          <div className="layout">
+            <Sidebar />
+            <div className="topbar_and_main">
+              <Topbar />
+              {children}
+            </div>
+            <Modals />
           </div>
-          <Modals />
         </Providers>
       </body>
 
     </html>
-  );
+  )
 }

@@ -1,7 +1,7 @@
 @use 'styles/variables';
 
 .viewTask {
-  width: 523px;
+  // width: 480px;
   
   section {
     margin-bottom: 24px;
@@ -13,13 +13,13 @@
 
   p {
     @include variables.bodyL;
-    color: variables.$mediumGrey;
+    color: var(--secondary-text-color);
     margin-bottom: 24px;
   }
 
   h2 {
     @include variables.bodyM;
-    color: variables.$mediumGrey;
+    color: var(--secondary-text-color);
     margin: 0px 0px 16px;
   }
 }
@@ -34,6 +34,7 @@
     @include variables.headingL;
     margin: 0px;
   }
+
 }
 
 .viewTask__subtasks {
@@ -44,15 +45,19 @@
 
 .viewTask__subtasks__eachTask {
   @include variables.bodyM;
-  background-color: variables.$lightGrey;
+  background-color: var(--subtask-checkbox-bg-color);
   border-radius: 8px;
   padding: 12px;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
 
+  &:hover {
+    background-color: var(--subtask-checkbox-bg-hover-color);
+  }
+
   &--true{
-    color: variables.$mediumGrey;
+    color: var(--secondary-text-color);
     text-decoration: line-through;
   }
 

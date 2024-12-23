@@ -1,7 +1,7 @@
 @use 'styles/variables';
 
 .deleteTask {
-  width: 480px;
+  // width: 480px;
 
   h1 {
     @include variables.headingXl;
@@ -10,7 +10,7 @@
   }
 
   p {
-    color: variables.$mediumGrey;
+    color: var(--secondary-text-color);
     margin: 0px 0px 24px;
 
     span {

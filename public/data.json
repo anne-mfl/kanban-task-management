@@ -1,4 +1,5 @@
 {
+  "currentBoardIndex": 0,
   "boards": [
     {
       "name": "Platform Launch",
@@ -74,11 +75,11 @@
               "status": "Doing",
               "subtasks": [
                 {
-                  "title": "Settings - Account page",
+                  "title": "SettinAccount page",
                   "isCompleted": true
                 },
                 {
-                  "title": "Settings - Billing page",
+                  "title": "SettinBilling page",
                   "isCompleted": true
                 },
                 {
@@ -362,10 +363,6 @@
           ]
         },
         {
-          "name": "Doing",
-          "tasks": []
-        },
-        {
           "name": "Done",
           "tasks": []
         }
@@ -424,7 +421,7 @@
       ]
     },
     {
-      "name": "Test Board",
+      "name": "New Board",
       "columns": []
     }
   ]

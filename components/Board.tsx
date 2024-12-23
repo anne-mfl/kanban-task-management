@@ -1,39 +1,85 @@
-import React from 'react'
-import { RootState } from '@/redux/store'
+import React, { useEffect, useState } from 'react';
+import { RootState } from '@/redux/store';
 import { useSelector } from "react-redux";
-import 'styles/components/_board.scss'
+import 'styles/components/_board.scss';
 import Column from './Column';
-import { current } from '@reduxjs/toolkit';
-import type { AllData, ColumnsDetail } from '@/type/type'; 
+import type { AllData } from 'type/type';
+import { DragDropContext, DropResult } from '@hello-pangea/dnd';
+import { useDispatch } from 'react-redux';
+import { dragAndDrop } from '@/redux/slices/dataSlice';
+import { openModal } from '@/redux/slices/modalSlice';
+
 
 const Board = () => {
-  // const currentBoard = useSelector((state: RootState) => state.currentBoard)
 
-  // const allData = useSelector((state: RootState)=> state.data.boards)
-  // const currentBoardIndex = allData.findIndex((board)=> board.name === currentBoard.name)
-  // const currentBoardData = allData[currentBoardIndex]
+  const allData: AllData = useSelector((state: RootState) => state.data);
+  const currentBoard = allData.boards[allData.currentBoardIndex];
 
-  const allData: AllData = useSelector((state: RootState)=> state.data)
-  const currentBoard = allData.currentBoard ? allData.currentBoard : allData.boards[0]
-  console.log('currentBoard in BOARD', currentBoard)
-  
+  const dispatch = useDispatch();
+
+  const [columns, setColumns] = useState(currentBoard.columns);
+
+  useEffect(() => {
+    setColumns(currentBoard.columns)
+  }, [currentBoard])
+
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source } = result;
+
+    if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) {
+      return;
+    }
+
+    const sourceColumnIndex = columns.findIndex((col) => col.name === source.droppableId);
+    const destinationColumnIndex = columns.findIndex((col) => col.name === destination.droppableId);
+
+    const sourceColumn = { ...columns[sourceColumnIndex], tasks: [...columns[sourceColumnIndex].tasks] };
+    const destinationColumn = { ...columns[destinationColumnIndex], tasks: [...columns[destinationColumnIndex].tasks] };
+
+    const [movedTask] = sourceColumn.tasks.splice(source.index, 1); // Remove the task from the source column
+
+    // If dragging within the same column
+    if (source.droppableId === destination.droppableId) {
+      sourceColumn.tasks.splice(destination.index, 0, movedTask);
+      const newColumns = [...columns];
+      newColumns[sourceColumnIndex] = sourceColumn;
+      setColumns(newColumns);
+      dispatch(dragAndDrop({ newColumns }));
+    } else {
+      // If dragging between different columns
+      destinationColumn.tasks.splice(destination.index, 0, movedTask);
+      const newColumns = [...columns];
+      newColumns[sourceColumnIndex] = sourceColumn;
+      newColumns[destinationColumnIndex] = destinationColumn;
+      setColumns(newColumns);
+      dispatch(dragAndDrop({ newColumns, destinationColumnIndex, destination }));
+    }
+  };
+
   return (
     <div className='board'>
-      {currentBoard.columns && currentBoard.columns.map((column: ColumnsDetail, index: number) => {
-        return (
+      <DragDropContext onDragEnd={onDragEnd}>
+        {columns.map((column, index) => (
           <Column
             key={column.name}
             columnTitle={column.name}
             columnData={column}
-            index={index}
+            columnIndex={index}
           />
-        )
-      })}
-      <section className='board__addNewColumn'>
-        <h1>+ New Column</h1>
-      </section>
+        ))}
+      </DragDropContext>
+      {columns.length < 7 &&
+        <section
+          className='board__addNewColumn'
+          onClick={() => dispatch(openModal({ modalType: 'EditBoard', modalDetail: currentBoard }))}
+        >
+          <h1>+ New Column</h1>
+        </section>
+      }
     </div>
-  )
+  );
 }
 
-export default Board
+export default Board;
+
+

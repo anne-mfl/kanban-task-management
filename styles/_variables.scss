@@ -87,14 +87,14 @@ $redHover: #FF9898;
   font-size: 13px;
   font-weight: 700;
   color: $mainPurple;
-  background: rgba($mainPurple, 0.1);
+  background: var(--secondary-btn-bg-color);
   border: none;
   padding: 7px 24px;
   border-radius: 999px;
   cursor: pointer;
 
   &:hover {
-    background: rgba($mainPurple, 0.25);
+    background: var(--secondary-btn-bg-hover-color);
   }
 }
 
@@ -116,26 +116,40 @@ $redHover: #FF9898;
 // input
 @mixin input {
   width: calc(100% - 32px);
-  border: 1px solid rgb($black, 0.25);
+  border: 1.5px solid rgb($mediumGrey, 0.25);
   border-radius: 4px;
-  padding: 8px 16px;
+  padding: 8px 12px;
+  background-color: var(--secondary-bg-color);
+  color: var(--main-text-color);
+
+  &:focus {
+    outline: none;
+    border: 1.5px solid $mainPurple;
+  }
 
   &::placeholder {
     @include bodyL();
-    color: rgb($black, 0.25);
+    color: var(--input-placeholder-color);
   }
 }
 
 @mixin textarea {
   width: calc(100% - 32px);
-  border: 1px solid rgb($black, 0.25);
+  border: 1.5px solid rgb($mediumGrey, 0.25);
   border-radius: 4px;
   padding: 8px 16px;
   resize: none;
   font-family: 'Plus Jakarta Sans';
+  background-color: var(--secondary-bg-color);
+  color: var(--main-text-color);
+
+  &:focus {
+    outline: none;
+    border: 1.5px solid $mainPurple;
+  }
 
   &::placeholder {
     @include bodyL();
-    color: rgb($black, 0.25);
+    color: var(--input-placeholder-color);
   }
 }

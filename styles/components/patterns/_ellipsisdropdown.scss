@@ -1,20 +1,27 @@
 @use 'styles/variables';
 
-.ellipsisDropdown img {
+.ellipsisDropdown svg {
   cursor: pointer;
-  position: relative;
-  padding: 0px 12px;
+  padding: 0px 10px;
 }
 
 .ellipsisDropdown__menu {
   border-radius: 8px;
-  border: 1px solid variables.$lightLines;
+  border: 1px solid var(--border-line-color);
   position: absolute;
-  margin-left: -90px;
-  margin-top: 20px;
   padding: 16px;
-  background-color: variables.$white;
+  background-color: var(--secondary-bg-color);
   z-index: 100;
+
+  &--Task {
+    margin-top: 10px;
+    margin-left: -90px;
+  }
+
+  &--Board {
+    margin-top: 170px;
+    margin-left: -140px;
+  }
 }
 
 .ellipsisDropdown__button {
@@ -26,7 +33,7 @@
   width: 160px;
   text-align: left;
   padding: 8px 0px;
-  color: variables.$mediumGrey;
+  color: var(--secondary-text-color);
 
   &--warning {
     color: variables.$red

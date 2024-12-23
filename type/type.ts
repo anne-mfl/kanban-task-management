@@ -10,19 +10,22 @@ export interface SubtaskDetail {
   isCompleted: boolean,
 }
 
-export interface ColumnsDetail {
+export interface ColumnDetail {
   name: string,
   tasks: TaskDetail[]
 }
 
 export interface AllData {
-  currentBoard?: {
-    name: string,
-    columns?: ColumnsDetail[]
-  },
+  currentBoardIndex: number,
   boards: {
     name: string,
-    columns: ColumnsDetail[]
+    columns: ColumnDetail[]
   }[]
 }
+
+export interface BoardDetail {
+  name: string,
+  columns: ColumnDetail[]
+}
+
 

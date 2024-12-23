@@ -1,22 +1,31 @@
-@use '../variables';
+@use 'styles/variables';
 
 .board {
   display: flex;
-  padding: 24px;
+  min-width: fit-content;
 }
 
 .board__addNewColumn {
-  background-color: #E9EFFA;
+  background-color: var(--newcolumn-bg-color);
   min-width: 320px;
-  margin-right: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
   margin-top: 47px;
+  cursor: pointer;
+  height: calc(100vh - 200px);
+  transition: background-color 0.35s;
 
   h1 {
     @include variables.headingXl;
-    color: variables.$mediumGrey;
+    color: var(--secondary-text-color);
   }
+
+  &:hover {
+    h1 {
+      color: variables.$mainPurple;
+    }
+  }
+
 }
