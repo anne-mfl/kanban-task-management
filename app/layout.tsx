@@ -17,11 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-
       <head>
         <link rel="icon" href="/assets/favicon.png" sizes="any" />
       </head>
-
       <body>
         <Providers>
           <div className="layout">
@@ -34,7 +32,6 @@ export default function RootLayout({
           </div>
         </Providers>
       </body>
-
     </html>
   )
 }

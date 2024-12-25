@@ -8,6 +8,12 @@ const nextConfig = {
 
     return config;
   },
+  output: 'export', // Enables static export
+  trailingSlash: true, // Adds trailing slashes to all paths
+  experimental: {
+    appDir: true,
+  },
+  // Add any additional configurations if needed
 };
 
 export default nextConfig;

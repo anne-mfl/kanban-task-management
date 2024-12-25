@@ -4,12 +4,12 @@ import type { ColumnDetail, TaskDetail, BoardDetail } from "type/type";
 
 const initialDataState = data
 
-let localStorageData = localStorage.getItem('data') === null ? false : JSON.parse(localStorage.getItem('data') || '{}')
+// let localStorageData = localStorage.getItem('data') === null ? false : JSON.parse(localStorage.getItem('data') || '{}')
 
 const dataSlice = createSlice({
   name: 'data',
-  initialState: localStorageData ? localStorageData : initialDataState,
-  // initialState: initialDataState,
+  // initialState: localStorageData ? localStorageData : initialDataState,
+  initialState: initialDataState,
   reducers: {
     addTask: (state, action) => {
       const { currentBoard, newTask, currentBoardIndex } = action.payload
