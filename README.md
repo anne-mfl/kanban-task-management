@@ -35,7 +35,7 @@ Users should be able to:
 
 ### Links
 
-- [Live Site here](https://anne-mfl.github.io/kanban-task-management/)
+- [Live Site here](https://kanban-task-management-quhg.vercel.app/)
 
 
 ## Built with
